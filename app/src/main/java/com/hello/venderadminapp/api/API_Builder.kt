@@ -4,6 +4,6 @@ import retrofit2.http.GET
 
 interface API_Builder {
     @GET("/getAllUsers")
-    suspend fun getAllUsers(): ArrayList<UserDataClassItem>
+    suspend fun getAllUsers(): ArrayList<UserDataClassItem?>
 
 }
