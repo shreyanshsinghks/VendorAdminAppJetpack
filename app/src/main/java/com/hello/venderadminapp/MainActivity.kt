@@ -1,6 +1,7 @@
 package com.hello.venderadminapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -12,7 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.hello.venderadminapp.api.RetrofitInstance
+import com.hello.venderadminapp.api.UserDataClassItem
 import com.hello.venderadminapp.ui.theme.VenderAdminAppTheme
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +26,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             VenderAdminAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Box(modifier = Modifier.padding(innerPadding).fillMaxSize()){
+                    Box(modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()){
 
                     }
                 }
