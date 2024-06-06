@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.hello.venderadminapp.navigation.Routes
 
 @Composable
 fun AllUsers(allUsersViewModel: AllUsersViewModel, navHostController: NavHostController) {
@@ -39,7 +40,26 @@ fun AllUsers(allUsersViewModel: AllUsersViewModel, navHostController: NavHostCon
             val response = allUsersViewModel.res.value
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(response) {
-                    SingleUserCard(user = it, onViewDetailsClick = {})
+                    SingleUserCard(user = it, onViewDetailsClick = {
+                        if (it != null) {
+                            navHostController.navigate(
+                                Routes.DetailsScreen(
+                                    Address = it.Address,
+                                    Block = it.Block,
+                                    DateOfAccountCreation = it.DateOfAccountCreation,
+                                    Level = it.Level,
+                                    PinCode = it.PinCode,
+                                    approved = it.approved,
+                                    email = it.email,
+                                    id = it.id,
+                                    name = it.name,
+                                    password = it.password,
+                                    phone = it.phone,
+                                    user_id = it.user_id
+                                )
+                            )
+                        }
+                    })
                 }
             }
         }
