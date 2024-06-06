@@ -10,7 +10,7 @@ import com.hello.venderadminapp.api.RetrofitInstance
 import com.hello.venderadminapp.api.UserDataClassItem
 import kotlinx.coroutines.launch
 
-class AllUsersViewModel: ViewModel() {
+class AllUsersViewModel : ViewModel() {
     var state = mutableStateOf("")
 
     val res = mutableStateOf<List<UserDataClassItem?>>(emptyList())
@@ -20,26 +20,34 @@ class AllUsersViewModel: ViewModel() {
             state.value = State.LOADING.name
             try {
                 res.value = getAllUsers()
-            }
-            catch (e: Exception){
+            } catch (e: Exception) {
                 state.value = State.DEFAULT.name
-            }
-            finally {
+            } finally {
                 state.value = State.SUCCESS.name
             }
         }
     }
 
 
-    private suspend fun getAllUsers(): List<UserDataClassItem?>{
+    private suspend fun getAllUsers(): List<UserDataClassItem?> {
         return RetrofitInstance.api.getAllUsers()
+    }
+
+    fun updateUserAccess(userId: String, approved: Int, blocked: Int) {
+        viewModelScope.launch {
+            RetrofitInstance.api.updateUserAccess(
+                userId = userId,
+                approved = approved,
+                blocked = blocked
+            )
+        }
     }
 
 
 }
 
 
-sealed class State(var name: String){
+sealed class State(var name: String) {
     object DEFAULT : State("DEFAULT")
     object FAILED : State("FAILED")
     object SUCCESS : State("SUCCESS")
