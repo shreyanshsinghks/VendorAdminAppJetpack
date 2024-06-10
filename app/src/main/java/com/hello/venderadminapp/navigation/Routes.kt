@@ -7,6 +7,9 @@ sealed class Routes {
     object AllUsers
 
     @Serializable
+    object AllProducts
+
+    @Serializable
     data class DetailsScreen(
         val Address: String,
         val Block: Int,
@@ -21,4 +24,7 @@ sealed class Routes {
         val phone: String,
         val user_id: String
     )
+
+    @Serializable
+    object AddProduct
 }

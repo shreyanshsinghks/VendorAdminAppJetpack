@@ -1,19 +1,17 @@
-package com.hello.venderadminapp.screens.allUsers
+package com.hello.venderadminapp.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hello.venderadminapp.api.API_Builder
+import com.hello.venderadminapp.api.ProductDataClassItem
 import com.hello.venderadminapp.api.RetrofitInstance
 import com.hello.venderadminapp.api.UserDataClassItem
 import kotlinx.coroutines.launch
 
 class AllUsersViewModel : ViewModel() {
     var state = mutableStateOf("")
-
     val res = mutableStateOf<List<UserDataClassItem?>>(emptyList())
+    var products = mutableStateOf<List<ProductDataClassItem>>(emptyList())
 
     init {
         viewModelScope.launch {
@@ -32,6 +30,22 @@ class AllUsersViewModel : ViewModel() {
     private suspend fun getAllUsers(): List<UserDataClassItem?> {
         return RetrofitInstance.api.getAllUsers()
     }
+
+    fun getAllProducts(): List<ProductDataClassItem>{
+        viewModelScope.launch {
+            products.value = RetrofitInstance.api.getAllProducts()
+        }
+        return products.value
+    }
+
+    fun addProduct(name: String, price: String, category: String, stock: Int) {
+        viewModelScope.launch {
+            RetrofitInstance.api.createProduct(
+                name = name, price = price, category = category, stock = stock
+            )
+        }
+    }
+
 
     fun updateUserAccess(userId: String, approved: Int, blocked: Int) {
         viewModelScope.launch {
